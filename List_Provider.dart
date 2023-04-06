@@ -29,8 +29,7 @@ Future<void> fetchData(MyListProvider provider) async {
   }
 }
 //Now, you can use the provider in your Flutter widget. In this example, we will use the Consumer widget to rebuild the widget tree whenever the state of the provider changes.
-dart
-Copy code
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
