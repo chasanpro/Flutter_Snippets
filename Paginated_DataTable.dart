@@ -128,3 +128,48 @@ class _PaginatedDataTableWithCheckboxesState
     );
   }
 }
+
+//Alternative to add more columns
+//to add more columns to the table, you need to modify the columns list and the getRows function. For example, if you want to add a column for the user's age, you can do something like this:
+
+//```dart
+// Add a new field for the user's age
+class User {
+  final String name;
+  final String email;
+  final int age;
+  bool selected;
+
+  User(this.name, this.email, this.age, {this.selected = false});
+}
+
+// Add a new column for the user's age
+final List<DataColumn> columns = [
+    DataColumn(label: Text('Name')),
+    DataColumn(label: Text('Email')),
+    DataColumn(label: Text('Age')),
+  ];
+
+// Add a new cell for the user's age
+List<DataRow> getRows(int startIndex, int endIndex) {
+    return users
+        .sublist(startIndex, endIndex)
+        .map(
+          (user) => DataRow(
+            onSelectChanged: (value) {
+              setState(() {
+                user.selected = value!;
+              });
+            },
+            selected: user.selected,
+            cells: [
+              DataCell(Text(user.name)),
+              DataCell(Text(user.email)),
+              DataCell(Text(user.age.toString())), // Add this line
+            ],
+          ),
+        )
+        .toList();
+  }
+```
+
