@@ -1,6 +1,6 @@
-Here is a possible code for a PaginatedDataTable widget in Flutter having multiple columns and checkboxes. I used the official documentation and some online examples as references. You may need to modify it according to your needs.
+//Here is a possible code for a PaginatedDataTable widget in Flutter having multiple columns and checkboxes. I used the official documentation and some online examples as references. You may need to modify it according to your needs.
 
-```dart
+
 import 'package:flutter/material.dart';
 
 class PaginatedDataTableExample extends StatefulWidget {
@@ -104,4 +104,4 @@ class UserDataSource extends DataTableSource {
   int get selectedRowCount =>
       users.where((user) => user.selected).length;
 }
-```
+
