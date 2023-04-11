@@ -1,161 +1,37 @@
+Here is a possible code for a PaginatedDataTable widget in Flutter having multiple columns and checkboxes. I used the official documentation and some online examples as references. You may need to modify it according to your needs.
+
+```dart
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class MyDataTableSource extends DataTableSource {
-  List<DataRow> _rows;
-
-  MyDataTableSource(List<MyDataRow> dataRows) {
-    _rows = dataRows.map((row) => row.build()).toList();
-  }
+class PaginatedDataTableExample extends StatefulWidget {
+  const PaginatedDataTableExample({Key? key}) : super(key: key);
 
   @override
-  DataRow getRow(int index) {
-    return _rows[index];
-  }
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get rowCount => _rows.length;
-
-  @override
-  int get selectedRowCount => 0;
+  _PaginatedDataTableExampleState createState() =>
+      _PaginatedDataTableExampleState();
 }
 
-class MyDataRow {
-  final String name;
-  final String email;
-  bool selected;
+class _PaginatedDataTableExampleState extends State<PaginatedDataTableExample> {
+  // Define the data source for the table
+  final List<User> users = List.generate(
+    100,
+    (index) => User('User $index', 'user$index@example.com', index + 18),
+  );
 
-  MyDataRow({this.name, this.email, this.selected = false});
-
-  DataRow build() {
-    return DataRow(
-      selected: selected,
-      onSelectChanged: (value) {
-        selected = value;
-      },
-      cells: [
-        DataCell(Text(name)),
-        DataCell(Text(email)),
-      ],
-    );
-  }
-}
-
-class PaginatedDataTableWithCheckboxes extends StatefulWidget {
-  final List<MyDataRow> dataRows;
-  final String header;
-
-  PaginatedDataTableWithCheckboxes({this.dataRows, this.header});
-
-  @override
-  _PaginatedDataTableWithCheckboxesState createState() =>
-      _PaginatedDataTableWithCheckboxesState();
-}
-
-class _PaginatedDataTableWithCheckboxesState
-    extends State<PaginatedDataTableWithCheckboxes> {
-  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
-  int _sortColumnIndex;
-  bool _sortAscending = true;
-  MyDataTableSource _dataTableSource;
-
-  @override
-  void initState() {
-    super.initState();
-    _dataTableSource = MyDataTableSource(widget.dataRows);
-  }
-
-  void _sort<T>(
-      Comparable<T> getField(MyDataRow d), int columnIndex, bool ascending) {
-    _dataTableSource._rows.sort((a, b) {
-      final aValue = getField(a);
-      final bValue = getField(b);
-      return ascending
-          ? Comparable.compare(aValue, bValue)
-          : Comparable.compare(bValue, aValue);
-    });
-    setState(() {
-      _sortColumnIndex = columnIndex;
-      _sortAscending = ascending;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: PaginatedDataTable(
-        header: Text(widget.header),
-        rowsPerPage: _rowsPerPage,
-        onRowsPerPageChanged: (int value) {
-          setState(() {
-            _rowsPerPage = value;
-          });
-        },
-        sortColumnIndex: _sortColumnIndex,
-        sortAscending: _sortAscending,
-        onSelectAll: (value) {
-          widget.dataRows.forEach((row) {
-            row.selected = value;
-          });
-          setState(() {
-            _dataTableSource = MyDataTableSource(widget.dataRows);
-          });
-        },
-        columns: [
-          DataColumn(
-              label: Text('Name'),
-              onSort: (columnIndex, ascending) {
-                _sort<String>((d) => d.name, columnIndex, ascending);
-              }),
-          DataColumn(
-              label: Text('Email'),
-              onSort: (columnIndex, ascending) {
-                _sort<String>((d) => d.email, columnIndex, ascending);
-              }),
-        ],
-        source: _dataTableSource,
-        checkboxHorizontalMargin: 8,
-        showCheckboxColumn: true,
-        initialFirstRowIndex: 0,
-        availableRowsPerPage: [5, 10, 20, 50],
-        onPageChanged: (pageIndex) {
-          print('Page changed: $pageIndex');
-        },
-      ),
-    );
-  }
-}
-
-//Alternative to add more columns
-//to add more columns to the table, you need to modify the columns list and the getRows function. For example, if you want to add a column for the user's age, you can do something like this:
-
-//```dart
-// Add a new field for the user's age
-class User {
-  final String name;
-  final String email;
-  final int age;
-  bool selected;
-
-  User(this.name, this.email, this.age, {this.selected = false});
-}
-
-// Add a new column for the user's age
-final List<DataColumn> columns = [
+  // Define the columns for the table
+  final List<DataColumn> columns = [
     DataColumn(label: Text('Name')),
     DataColumn(label: Text('Email')),
     DataColumn(label: Text('Age')),
   ];
 
-// Add a new cell for the user's age
-List<DataRow> getRows(int startIndex, int endIndex) {
+  // Define a function to get the rows for the table
+  List<DataRow> getRows(int startIndex, int endIndex) {
     return users
         .sublist(startIndex, endIndex)
         .map(
           (user) => DataRow(
+            // Add a checkbox for each row
             onSelectChanged: (value) {
               setState(() {
                 user.selected = value!;
@@ -165,11 +41,67 @@ List<DataRow> getRows(int startIndex, int endIndex) {
             cells: [
               DataCell(Text(user.name)),
               DataCell(Text(user.email)),
-              DataCell(Text(user.age.toString())), // Add this line
+              DataCell(Text(user.age.toString())),
             ],
           ),
         )
         .toList();
   }
-```
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('PaginatedDataTable Example'),
+      ),
+      body: SingleChildScrollView(
+        child: PaginatedDataTable(
+          // Set the header for the table
+          header: Text('Users'),
+          // Set the number of rows per page
+          rowsPerPage: 10,
+          // Set the columns for the table
+          columns: columns,
+          // Set the source for the table
+          source: UserDataSource(users, getRows),
+        ),
+      ),
+    );
+  }
+}
+
+// Define a class to represent a user
+class User {
+  final String name;
+  final String email;
+  final int age;
+  bool selected;
+
+  User(this.name, this.email, this.age, {this.selected = false});
+}
+
+// Define a class to implement the data source for the table
+class UserDataSource extends DataTableSource {
+  final List<User> users;
+  final Function getRows;
+
+  UserDataSource(this.users, this.getRows);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= users.length) return null!;
+    return getRows(index, index + 1).first;
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => users.length;
+
+  @override
+  int get selectedRowCount =>
+      users.where((user) => user.selected).length;
+}
+```
