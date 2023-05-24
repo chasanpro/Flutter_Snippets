@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  final List<Map<String, dynamic>> data = [
+    {'name': 'John', 'age': 25},
+    {'name': 'Jane', 'age': 30},
+    {'name': 'Bob', 'age': 35},
+    {'name': 'Alice', 'age': 28},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Data Table with Filtering'),
+        ),
+        body: Column(
+          children: [
+            DataTableWidget(data: data),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DataTableWidget extends StatefulWidget {
+  final List<Map<String, dynamic>> data;
+
+  DataTableWidget({required this.data});
+
+  @override
+  _DataTableWidgetState createState() => _DataTableWidgetState();
+}
+
+class _DataTableWidgetState extends State<DataTableWidget> {
+  late List<Map<String, dynamic>> filteredData;
+  TextEditingController filterController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    filteredData = widget.data;
+  }
+
+  void filterData(String query) {
+    setState(() {
+      filteredData = widget.data.where((item) {
+        final name = item['name'].toString().toLowerCase();
+        final age = item['age'].toString().toLowerCase();
+        return name.contains(query.toLowerCase()) || age.contains(query.toLowerCase());
+      }).toList();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          TextField(
+            controller: filterController,
+            onChanged: (value) => filterData(value),
+            decoration: InputDecoration(
+              labelText: 'Search',
+              prefixIcon: Icon(Icons.search),
+            ),
+          ),
+          SizedBox(height: 16.0),
+          DataTable(
+            columns: [
+              DataColumn(label: Text('Name')),
+              DataColumn(label: Text('Age')),
+            ],
+            rows: filteredData.map((item) {
+              return DataRow(cells: [
+                DataCell(Text(item['name'].toString())),
+                DataCell(Text(item['age'].toString())),
+              ]);
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
