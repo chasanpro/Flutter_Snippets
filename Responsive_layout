@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Responsive Screen Example',
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Responsive Screen Example'),
+      ),
+      body: ResponsiveBuilder(
+        builder: (context, sizingInformation) {
+          if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+            return DesktopView();
+          } else if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+            return TabletView();
+          } else {
+            return MobileView();
+          }
+        },
+      ),
+    );
+  }
+}
+
+class MobileView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "Mobile View",
+        style: TextStyle(fontSize: 20),
+      ),
+    );
+  }
+}
+
+class TabletView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "Tablet View",
+        style: TextStyle(fontSize: 30),
+      ),
+    );
+  }
+}
+
+class DesktopView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "Desktop View",
+        style: TextStyle(fontSize: 40),
+      ),
+    );
+  }
+}
