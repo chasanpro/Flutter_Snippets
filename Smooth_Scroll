@@ -115,6 +115,134 @@ class _WebSmoothScrollState extends State<WebSmoothScroll> {
         duration: Duration(milliseconds: millis),
         curve: widget.curve,
       );
-    }
+    }// import 'package:flutter/material.dart';
+// import 'package:flutter_v3/controllers/counter_controller.dart';
+// import 'package:provider/provider.dart';
+
+// import 'source.dart';
+
+// class CounterPage extends StatefulWidget {
+//   const CounterPage({super.key});
+
+//   @override
+//   State<CounterPage> createState() => _CounterPageState();
+// }
+
+// class _CounterPageState extends State<CounterPage> {
+//   late List<TextEditingController> textControllers;
+//   late ScrollController _scrollController;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _scrollController = ScrollController();
+//     textControllers = List.generate(20, (index) => TextEditingController());
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     debugPrint('Homepage Launched');
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Builder(
+//           builder: (context) {
+//             return Text(
+//                 'Counter ${context.watch<CounterController>().count.toString()}');
+//           },
+//         ),
+//         actions: [
+//           IconButton(
+//             icon: const Icon(Icons.people),
+//             onPressed: () => Navigator.of(context).pushNamed('/usuarios'),
+//           ),
+//         ],
+//       ),
+//       body: _buildScrollableContent(),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: context.read<CounterController>().increment,
+//         tooltip: 'Increment',
+//         child: const Icon(Icons.add),
+//       ),
+//     );
+//   }
+
+//   Widget _buildScrollableContent() {
+//     if (isMobile(context)) {
+//       // Use regular ListView for mobile devices
+//       return ListView.builder(
+//         controller: _scrollController,
+//         itemCount: 60,
+//         itemBuilder: (context, index) {
+//           return const Padding(
+//             padding: EdgeInsets.all(8.0),
+//             child: MyCard(),
+//           );
+//         },
+//       );
+//     } else {
+//       // Use WebSmoothScroll for non-mobile devices
+//       return WebSmoothScroll(
+//         controller: _scrollController,
+//         child: ListView(
+//           physics: const NeverScrollableScrollPhysics(),
+//           controller: _scrollController,
+//           children: List.generate(
+//             60,
+//             (index) {
+//               return const Padding(
+//                 padding: EdgeInsets.all(8.0),
+//                 child: MyCard(),
+//               );
+//             },
+//           ),
+//         ),
+//       );
+//     }
+//   }
+
+//   @override
+//   void dispose() {
+//     for (var controller in textControllers) {
+//       controller.dispose();
+//     }
+//     super.dispose();
+//   }
+
+//   bool isMobile(BuildContext context) {
+//     return MediaQuery.of(context).size.shortestSide < 600;
+//   }
+// }
+
+// class MyCard extends StatelessWidget {
+//   const MyCard({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       elevation: 5.0,
+//       shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(15.0),
+//       ),
+//       child: ListTile(
+//         title: const Text('Card Title'),
+//         subtitle: const Text('Card Subtitle'),
+//         leading: const Icon(Icons.star),
+//         trailing: const Icon(Icons.arrow_forward),
+//         onTap: () {
+//           // Handle card tap
+//         },
+//       ),
+//     );
+//   }
+// }
+
   }
 }
+
+
+
+
+
+
+
+
