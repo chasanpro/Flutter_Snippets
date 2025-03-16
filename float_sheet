@@ -34,7 +34,7 @@ void openBottomSheet(BuildContext context) {
                   IconButton(
                     icon: Icon(
                       Icons.close,
-                      color: AppColors.primary,
+                    //  color: AppColors.primary,
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -42,36 +42,36 @@ void openBottomSheet(BuildContext context) {
                   ),
                 ],
               ),
-              CustomText(
-                text: 'Are you sure to delete the \naddress!',
-                fontWeight: FontWeight.w600,
-                fontSize: 12.sp,
-              ),
-              spacebox(h: 15),
-              CustomText(
-                text:
-                    '703/A, Landsend Building, Lokhandwala\n Complex, Andheri (W), Mumbai 400053',
-                fontWeight: FontWeight.w400,
-                fontSize: 10.sp,
-              ),
-              spacebox(h: 15),
-              lightButton(
-                  child: CustomText(
-                    text: 'Yes!  Delete',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13.sp,
-                    color: red,
-                  ),
-                  color: pinAccent),
-              spacebox(h: 15),
-              lightButton(
-                  child: CustomText(
-                    text: 'No! Keep it',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13.sp,
-                    color: AppColors.primary,
-                  ),
-                  color: const Color.fromARGB(255, 228, 240, 255)),
+//               CustomText(
+//                 text: 'Are you sure to delete the \naddress!',
+//                 fontWeight: FontWeight.w600,
+//                 fontSize: 12.sp,
+//               ),
+//               spacebox(h: 15),
+//               CustomText(
+//                 text:
+//                     '703/A, Landsend Building, Lokhandwala\n Complex, Andheri (W), Mumbai 400053',
+//                 fontWeight: FontWeight.w400,
+//                 fontSize: 10.sp,
+//               ),
+//               spacebox(h: 15),
+//               lightButton(
+//                   child: CustomText(
+//                     text: 'Yes!  Delete',
+//                     fontWeight: FontWeight.w400,
+//                     fontSize: 13.sp,
+//                     color: red,
+//                   ),
+//                   color: pinAccent),
+//               spacebox(h: 15),
+//               lightButton(
+//                   child: CustomText(
+//                     text: 'No! Keep it',
+//                     fontWeight: FontWeight.w400,
+//                     fontSize: 13.sp,
+//                     color: AppColors.primary,
+//                   ),
+               //   color: const Color.fromARGB(255, 228, 240, 255)),
             ],
           ),
         ),
@@ -80,5 +80,3 @@ void openBottomSheet(BuildContext context) {
     isScrollControlled: true, // Ensure the bottom sheet takes full height
   );
 }
-
-
