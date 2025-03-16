@@ -1,0 +1,84 @@
+void openBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    useSafeArea: true,
+    context: context,
+    backgroundColor: Colors.transparent, // Make background transparent
+    builder: (BuildContext context) {
+      return Container(
+        height: 350,
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(
+            horizontal: 20, vertical: 30), // Add margin around the container
+        decoration: BoxDecoration(
+          color: Colors.white, // Set background color to white
+          borderRadius: BorderRadius.circular(20), // Add rounded corners
+          boxShadow: [
+            // Add a subtle shadow
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding:
+              const EdgeInsets.all(16.0), // Add padding inside the container
+          child: Column(
+            mainAxisSize:
+                MainAxisSize.min, // Make Column take only the space it needs
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.close,
+                      color: AppColors.primary,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              CustomText(
+                text: 'Are you sure to delete the \naddress!',
+                fontWeight: FontWeight.w600,
+                fontSize: 12.sp,
+              ),
+              spacebox(h: 15),
+              CustomText(
+                text:
+                    '703/A, Landsend Building, Lokhandwala\n Complex, Andheri (W), Mumbai 400053',
+                fontWeight: FontWeight.w400,
+                fontSize: 10.sp,
+              ),
+              spacebox(h: 15),
+              lightButton(
+                  child: CustomText(
+                    text: 'Yes!  Delete',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13.sp,
+                    color: red,
+                  ),
+                  color: pinAccent),
+              spacebox(h: 15),
+              lightButton(
+                  child: CustomText(
+                    text: 'No! Keep it',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13.sp,
+                    color: AppColors.primary,
+                  ),
+                  color: const Color.fromARGB(255, 228, 240, 255)),
+            ],
+          ),
+        ),
+      );
+    },
+    isScrollControlled: true, // Ensure the bottom sheet takes full height
+  );
+}
+
+
